@@ -42,9 +42,9 @@ const basket = new Basket(cloneTemplate(basketTemplate), events);
 const order = new Order(cloneTemplate(orderTemplate), events);
 const orderContacts = new Order(cloneTemplate(contactsTemplate), events);
 
-events.onAll((event) => {
-	console.log(event.eventName, event.data);
-});
+// events.onAll((event) => {
+// 	console.log(event.eventName, event.data);
+// });
 
 // Получаем продукты с сервера
 api
