@@ -52,12 +52,12 @@ export class ProductUI extends Component<IProduct> {
 
 		if (this._button) {
 			if (productInBasket) {
-				this.setText(this._button, 'Удалить из корзины');
+				this.setText(this._button, 'Убрать');
 				this._button.addEventListener('click', () => {
 					events.emit('preview:delete', product);
 				});
 			} else {
-				this.setText(this._button, 'В корзину');
+				this.setText(this._button, 'Купить');
 				this._button.addEventListener('click', () => {
 					events.emit('basket:add', product);
 				});

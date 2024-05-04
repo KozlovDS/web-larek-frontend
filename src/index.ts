@@ -149,6 +149,7 @@ events.on('basket:add', (item: IProduct) => {
 		events
 	);
 	modal.render({ content: cardBasket.render(item) });
+	modal.close();
 });
 
 //Удаление товара в корзине из модального окна товара
