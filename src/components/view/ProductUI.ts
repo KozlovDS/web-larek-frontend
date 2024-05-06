@@ -1,7 +1,7 @@
 import { IProduct } from '../../types';
 import { formatNumber } from '../../utils/utils';
 import { Component } from '../base/Component';
-import { IEvents } from '../base/events';
+import { IEvents } from '../base/Events';
 
 interface ICardActions {
 	onClick: (event: MouseEvent) => void;

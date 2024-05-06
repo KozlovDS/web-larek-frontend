@@ -1,6 +1,6 @@
 import { Component } from '../base/Component';
 import { createElement, ensureElement, formatNumber } from '../../utils/utils';
-import { EventEmitter } from '../base/events';
+import { EventEmitter } from '../base/Events';
 
 interface IBasketView {
 	products: HTMLElement[];
@@ -29,21 +29,25 @@ export class Basket extends Component<IBasketView> {
 		}
 	}
 
+	protected toggleButton(state: boolean) {
+		this.setDisabled(this._button, state);
+	}
+
 	set products(items: HTMLElement[]) {
 		if (items.length) {
 			this._products.replaceChildren(...items);
-			this.setDisabled(this._button, false);
+			this.toggleButton(false);
 		} else {
 			this._products.replaceChildren(
 				createElement<HTMLParagraphElement>('p', {
 					textContent: 'Корзина пуста',
 				})
 			);
-			this.setDisabled(this._button, true);
+			this.toggleButton(true);
 		}
 	}
 
 	set total(total: number) {
-		this.setText(this._total, formatNumber(total));
+		this.setText(this._total, `${formatNumber(total)} синапсов`);
 	}
 }

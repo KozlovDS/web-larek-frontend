@@ -1,10 +1,13 @@
 import { Form } from './Form';
 import { IOrderForm } from '../../types';
-import { IEvents } from '../base/events';
+import { IEvents } from '../base/Events';
 import { ensureAllElements } from '../../utils/utils';
 
-export class Order extends Form<IOrderForm> {
+export class OrderForm extends Form<IOrderForm> {
 	protected _payment: HTMLButtonElement[];
+	protected _phone: HTMLInputElement;
+	protected _email: HTMLInputElement;
+	protected _address: HTMLInputElement;
 
 	constructor(container: HTMLFormElement, events: IEvents) {
 		super(container, events);
@@ -12,6 +15,15 @@ export class Order extends Form<IOrderForm> {
 			'.button_alt',
 			container
 		);
+		this._phone = this.container.elements.namedItem(
+			'phone'
+		) as HTMLInputElement;
+		this._email = this.container.elements.namedItem(
+			'email'
+		) as HTMLInputElement;
+		this._address = this.container.elements.namedItem(
+			'address'
+		) as HTMLInputElement;
 
 		if (this._payment) {
 			this._payment.forEach((button) => {
@@ -32,23 +44,20 @@ export class Order extends Form<IOrderForm> {
 	paymentSelectedRemove() {
 		this._payment.forEach((button) => {
 			if (button.classList.contains('button_alt-active')) {
-				button.classList.remove('button_alt-active');
+				this.toggleClass(button, 'button_alt-active', false);
 			}
 		});
 	}
 
 	set phone(value: string) {
-		(this.container.elements.namedItem('phone') as HTMLInputElement).value =
-			value;
+		this._phone.value = value;
 	}
 
 	set email(value: string) {
-		(this.container.elements.namedItem('email') as HTMLInputElement).value =
-			value;
+		this._email.value = value;
 	}
 
 	set address(value: string) {
-		(this.container.elements.namedItem('address') as HTMLInputElement).value =
-			value;
+		this._address.value = value;
 	}
 }

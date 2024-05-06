@@ -1,10 +1,10 @@
 import { BasketData } from './components/model/BasketData';
 import { Modal } from './components/view/Modal';
 import { Page } from './components/view/Page';
-import { ProductAPI } from './components/base/ProductAPI';
+import { ProductAPI } from './components/ProductAPI';
 import { ProductData } from './components/model/ProductData';
 import { ProductUI } from './components/view/ProductUI';
-import { EventEmitter } from './components/base/events';
+import { EventEmitter } from './components/base/Events';
 import './scss/styles.scss';
 import {
 	IOrderContactForm,
@@ -15,7 +15,7 @@ import {
 import { API_URL, CDN_URL } from './utils/constants';
 import { cloneTemplate, ensureElement } from './utils/utils';
 import { Basket } from './components/view/Basket';
-import { Order } from './components/view/Order';
+import { OrderForm } from './components/view/OrderForm';
 import { OrderData } from './components/model/OrderData';
 import { Success } from './components/view/Success';
 
@@ -39,8 +39,9 @@ const productData = new ProductData({}, events);
 const basketData = new BasketData({}, events);
 const orderData = new OrderData({}, events);
 const basket = new Basket(cloneTemplate(basketTemplate), events);
-const order = new Order(cloneTemplate(orderTemplate), events);
-const orderContacts = new Order(cloneTemplate(contactsTemplate), events);
+const order = new OrderForm(cloneTemplate(orderTemplate), events);
+const orderContacts = new OrderForm(cloneTemplate(contactsTemplate), events);
+const success = new Success(cloneTemplate(successTemplate), events);
 
 // events.onAll((event) => {
 // 	console.log(event.eventName, event.data);
@@ -52,9 +53,7 @@ api
 	.then((res) => {
 		productData.products = res;
 	})
-	.catch((err) => {
-		console.error(err);
-	});
+	.catch(console.error);
 
 //Выводим продукты на экран
 events.on('products:changed', () => {
@@ -239,7 +238,6 @@ events.on('contacts:submit', () => {
 	api
 		.order(orderData.order)
 		.then(() => {
-			const success = new Success(cloneTemplate(successTemplate), events);
 			success.total = basketData.totalPrise;
 			modal.render({
 				content: success.render({}),
@@ -249,9 +247,7 @@ events.on('contacts:submit', () => {
 			orderData.clearOrderData();
 			events.emit('basket:changed');
 		})
-		.catch((err) => {
-			console.error(err);
-		});
+		.catch(console.error);
 });
 
 events.on('success:close', () => {
