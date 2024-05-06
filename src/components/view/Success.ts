@@ -7,7 +7,6 @@ interface ISuccess {
 }
 
 export class Success extends Component<ISuccess> {
-	protected _close: HTMLElement;
 	protected _total: HTMLElement;
 	protected button: HTMLElement;
 

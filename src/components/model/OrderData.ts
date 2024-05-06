@@ -45,6 +45,8 @@ export class OrderData extends Model<IOrder> implements IOrder {
 
 	validateOrder() {
 		const errors: typeof this.formErrors = {};
+		const regexEmail = /^[^@]+@\w+(\.\w+)+\w$/;
+		const regexPhone = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/;
 
 		if (!this._order.payment) {
 			errors.payment = 'Необходимо выбрать способ оплаты';
@@ -56,10 +58,14 @@ export class OrderData extends Model<IOrder> implements IOrder {
 
 		if (!this._order.email) {
 			errors.email = 'Необходимо указать Email';
+		} else if (!regexEmail.test(this._order.email)) {
+			errors.email = 'Необходимо указать валидный Email';
 		}
 
 		if (!this._order.phone) {
 			errors.phone = 'Необходимо указать телефон';
+		} else if (!regexPhone.test(this._order.phone)) {
+			errors.email = 'Необходимо указать валидный телефон';
 		}
 
 		this.formErrors = errors;

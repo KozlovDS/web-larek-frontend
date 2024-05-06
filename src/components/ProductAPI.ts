@@ -4,6 +4,7 @@ import { IOrderData, IOrderResult, IProduct } from '../types';
 export interface IProductAPI {
 	getProductList: () => Promise<IProduct[]>;
 	getProductItem: (id: string) => Promise<IProduct>;
+	order: (order: IOrderData) => Promise<IOrderResult>;
 }
 
 export class ProductAPI extends Api implements IProductAPI {
